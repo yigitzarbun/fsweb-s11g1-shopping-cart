@@ -6,7 +6,6 @@ import { CartContext } from "../contexts/CartContext";
 
 const Navigation = () => {
   const cart = useContext(CartContext);
-  console.log(typeof cart);
   return (
     <ScNav>
       <nav className="content">
