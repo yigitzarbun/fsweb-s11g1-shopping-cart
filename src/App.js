@@ -18,8 +18,16 @@ function App() {
     setCart([...cart, item]);
   };
 
+  const removeItem = (id) => {
+    console.log(id);
+    let copyCart = [...cart];
+    let selectedItem = copyCart.map((item) => item.id === id)[0];
+    let index = copyCart.indexOf(selectedItem);
+    copyCart.splice(index, 1);
+    setCart(copyCart);
+  };
   return (
-    <ProductContext.Provider value={{ products, addItem }}>
+    <ProductContext.Provider value={{ products, addItem, removeItem }}>
       <CartContext.Provider value={cart}>
         <div className="App">
           <Navigation />
