@@ -6,7 +6,7 @@ import Item from "./ShoppingCartItem";
 import { CartContext } from "../contexts/CartContext";
 
 const ShoppingCart = () => {
-  const cart = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
   const getCartTotal = () => {
     return cart
       .reduce((acc, value) => {
@@ -24,6 +24,9 @@ const ShoppingCart = () => {
       <ScCartCheckout>
         <p>Total: ${getCartTotal()}</p>
         <button>Checkout</button>
+        <button onClick={clearCart} disabled={cart.length > 0 ? false : true}>
+          Clear Cart
+        </button>
       </ScCartCheckout>
     </div>
   );
