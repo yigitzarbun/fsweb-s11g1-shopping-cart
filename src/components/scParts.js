@@ -77,7 +77,6 @@ export const ScCartItem = styled.div`
   background: white;
   display: flex;
   margin-bottom: 1rem;
-
   img {
     width: 100px;
   }
@@ -88,7 +87,6 @@ export const ScCartItemDetails = styled.div`
   display: flex;
   padding: 0 2rem;
   align-items: center;
-
   h2 {
     font-size: 1.25rem;
     flex: 1;
@@ -96,18 +94,27 @@ export const ScCartItemDetails = styled.div`
   p {
     padding-right: 1rem;
   }
-
   @media (max-width: 640px) {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding: 0 1rem;
-
     h2 {
       flex: 0 0 100%;
       font-size: 1rem;
     }
   }
+`;
+
+export const ScCartItemQtyButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+`;
+
+export const ScCartItemQtyButtons = styled.button`
+  border: none;
 `;
 
 export const ScCartCheckout = styled.div`

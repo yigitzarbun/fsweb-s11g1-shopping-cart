@@ -16,6 +16,20 @@ function App() {
   const [searchItem, setSearchItem] = useState("");
   const [cart, setCart] = useState(getInitialState());
 
+  const increaseQty = (id) => {
+    let copyCart = [...cart];
+    let selectedItem = copyCart.filter((item) => item.id === id)[0];
+    selectedItem.quantity += 1;
+    setCart([...copyCart]);
+  };
+
+  const decreaseQty = (id) => {
+    let copyCart = [...cart];
+    let selectedItem = copyCart.filter((item) => item.id === id)[0];
+    selectedItem.quantity -= 1;
+    setCart([...copyCart]);
+  };
+
   function getInitialState() {
     const cart = localStorage.getItem("cart");
     return cart ? JSON.parse(cart) : [];
@@ -25,12 +39,17 @@ function App() {
     localStorage.setItem("cart", JSON.stringify(cart));
   }
 
-  useEffect(() => {
-    cartProvider();
-  }, [cart]);
+  const calculateOrderQty = () => {
+    let result = 0;
+    for (let i = 0; i < cart.length; i++) {
+      result += cart[i].quantity;
+    }
+    return result;
+  };
 
   const addItem = (item) => {
-    setCart([...cart, item]);
+    let newItem = { ...item };
+    setCart([...cart, newItem]);
     toast("Item was added to cart!");
   };
 
@@ -56,6 +75,11 @@ function App() {
     setSearchItem("");
   };
 
+  useEffect(() => {
+    calculateOrderQty();
+    cartProvider();
+  }, [cart]);
+
   return (
     <ProductContext.Provider
       value={{
@@ -68,7 +92,9 @@ function App() {
       }}
     >
       <ToastContainer />
-      <CartContext.Provider value={{ cart, clearCart }}>
+      <CartContext.Provider
+        value={{ cart, clearCart, increaseQty, decreaseQty, calculateOrderQty }}
+      >
         <div className="App">
           <Navigation />
           <main className="content">

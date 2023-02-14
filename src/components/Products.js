@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ProductContext } from "../contexts/ProductContext";
+import { CartContext } from "../contexts/CartContext";
 import { useContext } from "react";
 // Components
 import Product from "./Product";
@@ -38,6 +39,17 @@ const StyledSearchBar = styled.input`
 const Products = () => {
   const { products, addItem, searchItem, handleSearch, clearSearch } =
     useContext(ProductContext);
+  const { cart } = useContext(CartContext);
+  const cartItemQty = (product) => {
+    let selectedItem = cart.find((item) => item.id === product.id);
+    let result = 0;
+    if (selectedItem === undefined) {
+      result = 0;
+    } else {
+      result = selectedItem.quantity;
+    }
+    return result;
+  };
 
   return (
     <div>
@@ -49,6 +61,7 @@ const Products = () => {
             name="search"
             value={searchItem}
             onChange={handleSearch}
+            placeholder="search books by name..."
           />
         </label>
         <StyledButton onClick={clearSearch}>Clear</StyledButton>
@@ -65,7 +78,12 @@ const Products = () => {
             }
           })
           .map((product) => (
-            <Product key={product.id} product={product} addItem={addItem} />
+            <Product
+              key={product.id}
+              product={product}
+              addItem={addItem}
+              cartItemQty={cartItemQty(product)}
+            />
           ))}
       </ScProducts>
     </div>
